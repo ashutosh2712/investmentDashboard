@@ -1,8 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import SideBar from "../components/SideBar";
 import SectorAllocation from "../components/SectorAllocation";
+import OverlapAnalysis from "../components/OverlapAnalysis.JSX";
+import PerformanceSummary from "../components/PerformanceSummary";
+
+import InvestmentCards from "../components/InvestmentCards";
 
 const Dashboard = () => {
+  const [activeTab, setActiveTab] = useState("Performance Metrics");
   return (
     <div className="flex">
       <SideBar />
@@ -12,41 +17,39 @@ const Dashboard = () => {
           Evaluate Your Investment Performance
         </p>
 
-        <div className="grid grid-cols-4 gap-6">
-          <div className="bg-gray-800 p-4 rounded-lg">
-            <p className="text-gray-400">Current Investment Value</p>
-            <h2 className="text-2xl font-semibold">₹5,75,000</h2>
-            <p className="text-green-400 text-sm">+0.6% 1D Return</p>
-          </div>
+        <InvestmentCards />
 
-          <div className="bg-gray-800 p-4 rounded-lg">
-            <p className="text-gray-400">Initial Investment Value</p>
-            <h2 className="text-2xl font-semibold">₹5,00,000</h2>
-          </div>
-
-          <div className="bg-gray-800 p-4 rounded-lg">
-            <p className="text-gray-400">Best Performing Scheme</p>
-            <h2 className="text-2xl font-semibold">
-              ICICI Prudential Midcap Fund
-            </h2>
-            <p className="text-green-400 text-sm">+19% Inception</p>
-          </div>
-
-          <div className="bg-gray-800 p-4 rounded-lg">
-            <p className="text-gray-400">Worst Performing Scheme</p>
-            <h2 className="text-2xl font-semibold">Axis Flexi Cap Fund</h2>
-            <p className="text-red-400 text-sm">-5% Inception</p>
-          </div>
-        </div>
+        {/* Tabs for Performance Metrics & Portfolio Composition */}
         <div className="flex justify-around border-b border-gray-600 mb-6 mt-10">
-          <h3 className="text-lg font-semibold text-gray-400">
+          <h3
+            className={`text-lg font-semibold cursor-pointer ${
+              activeTab === "Performance Metrics"
+                ? "text-white border-b-2 border-blue-500"
+                : "text-gray-400"
+            }`}
+            onClick={() => setActiveTab("Performance Metrics")}
+          >
             Performance Metrics
           </h3>
-          <h3 className="text-lg font-semibold text-white border-b-2 border-blue-500">
+          <h3
+            className={`text-lg font-semibold cursor-pointer ${
+              activeTab === "Portfolio Composition"
+                ? "text-white border-b-2 border-blue-500"
+                : "text-gray-400"
+            }`}
+            onClick={() => setActiveTab("Portfolio Composition")}
+          >
             Portfolio Composition
           </h3>
         </div>
-        <SectorAllocation />
+        {activeTab === "Performance Metrics" ? (
+          <PerformanceSummary />
+        ) : (
+          <>
+            <SectorAllocation />
+            <OverlapAnalysis />
+          </>
+        )}
       </section>
     </div>
   );
