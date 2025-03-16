@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import SideBar from "../components/SideBar";
 import SectorAllocation from "../components/SectorAllocation";
-import OverlapAnalysis from "../components/OverlapAnalysis.JSX";
+
 import PerformanceSummary from "../components/PerformanceSummary";
 
 import InvestmentCards from "../components/InvestmentCards";
+import OverlapsAnalysis from "../components/OverlapsAnalysis";
 
 const Dashboard = () => {
   const [activeTab, setActiveTab] = useState("Performance Metrics");
@@ -47,7 +48,7 @@ const Dashboard = () => {
         ) : (
           <>
             <SectorAllocation />
-            <OverlapAnalysis />
+            <OverlapsAnalysis />
           </>
         )}
       </section>
