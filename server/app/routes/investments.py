@@ -4,6 +4,7 @@ from app.database import get_db
 from app.models import Investment, MutualFund
 from app.schemas import InvestmentCreate, InvestmentResponse,InvestmentOverviewResponse
 
+
 router = APIRouter()
 
 # Add a new investment
@@ -56,3 +57,4 @@ def get_investment(investment_id: int, db: Session = Depends(get_db)):
     if not investment:
         raise HTTPException(status_code=404, detail="Investment not found")
     return investment
+

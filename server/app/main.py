@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.database import engine, Base
 from app.routes import investments
-
+from app.routes import fund_allocations
 from app import models
 
 
@@ -19,7 +19,7 @@ app.add_middleware(
 
 # Register API Routes
 app.include_router(investments.router, prefix="/investments", tags=["Investments"])
-
+app.include_router(fund_allocations.router, prefix="/fund-allocations", tags=["Fund Allocations"])
 
 print("Creating tables in the database...")
 Base.metadata.create_all(bind=engine)
