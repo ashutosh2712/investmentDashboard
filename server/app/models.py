@@ -27,7 +27,7 @@ class MutualFund(Base):
     sector_allocations = relationship("SectorAllocation", back_populates="mutual_fund")
     stock_allocations = relationship("StockAllocation", back_populates="mutual_fund")
     market_cap_allocations = relationship("MarketCapAllocation", back_populates="mutual_fund")
-
+    performance_data = relationship("InvestmentPerformance", back_populates="mutual_fund")
 
 # Investments Table (Tracks User Investments)
 class Investment(Base):
@@ -79,3 +79,30 @@ class MarketCapAllocation(Base):
     allocation_percentage = Column(DECIMAL(5,2), nullable=False)
 
     mutual_fund = relationship("MutualFund", back_populates="market_cap_allocations")
+    
+
+#  Fund Overlap Table (Tracks Overlap Percentage Between Mutual Funds)
+class FundOverlap(Base):
+    __tablename__ = "fund_overlap"
+
+    id = Column(Integer, primary_key=True, index=True)
+    fund_1_id = Column(Integer, ForeignKey("mutual_funds.id"), nullable=False)
+    fund_2_id = Column(Integer, ForeignKey("mutual_funds.id"), nullable=False)
+    overlap_percentage = Column(DECIMAL(5, 2), nullable=False)
+
+    # Relationships
+    fund_1 = relationship("MutualFund", foreign_keys=[fund_1_id])
+    fund_2 = relationship("MutualFund", foreign_keys=[fund_2_id])
+    
+    
+# Investment Performance Table (Tracks Performance Over Time)
+class InvestmentPerformance(Base):
+    __tablename__ = "investment_performance"
+
+    id = Column(Integer, primary_key=True, index=True)
+    mutual_fund_id = Column(Integer, ForeignKey("mutual_funds.id"), nullable=False)
+    date = Column(Date, nullable=False)
+    investment_value = Column(DECIMAL(15, 2), nullable=False)  # Latest value
+
+    # Relationship with Mutual Funds
+    mutual_fund = relationship("MutualFund", back_populates="performance_data")

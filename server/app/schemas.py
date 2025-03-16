@@ -68,3 +68,26 @@ class MutualFundAllocationResponse(BaseModel):
 
     class Config:
         orm_mode = True
+
+
+class FundOverlapResponse(BaseModel):
+    fund_1: str
+    fund_2: str
+    overlap_percentage: float
+
+
+class OverlapAnalysisResponse(BaseModel):
+    overlaps: List[FundOverlapResponse]
+    
+class InvestmentPerformanceResponse(BaseModel):
+    fund_name: str
+    amount_invested: float
+    current_value: float
+    irr_percentage: float
+
+
+class PerformanceSummaryResponse(BaseModel):
+    total_investment: float
+    total_current_value: float
+    overall_irr: float
+    investment_breakdown: List[InvestmentPerformanceResponse]
