@@ -1,7 +1,10 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.database import engine, Base
-from app.routes import users, investments
+from app.routes import investments
+
+from app import models
+
 
 app = FastAPI(title="Investment Dashboard API", version="1.0")
 
@@ -13,11 +16,14 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# app.include_router(users.router, prefix="/users", tags=["Users"])
-# app.include_router(investments.router, prefix="/investments", tags=["Investments"])
+
+# Register API Routes
+app.include_router(investments.router, prefix="/investments", tags=["Investments"])
 
 
+print("Creating tables in the database...")
 Base.metadata.create_all(bind=engine)
+print("Tables should be created now.")
 
 @app.get("/")
 def root():

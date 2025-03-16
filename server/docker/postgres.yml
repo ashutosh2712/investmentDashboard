@@ -12,10 +12,10 @@ services:
       POSTGRES_PASSWORD: admin123
 
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - investment_postgres_data:/var/lib/postgresql/data
 
     ports:
       - 8015:5432
 
 volumes:
-  postgres_data:
+  investment_postgres_data:
