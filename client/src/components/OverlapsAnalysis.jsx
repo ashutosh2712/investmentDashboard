@@ -90,7 +90,7 @@ const CustomNode = ({ x, y, width, height, index, payload }) => {
   );
 };
 
-const OverlapAnalysis = () => {
+const OverlapsAnalysis = () => {
   const [overlapData, setOverlapData] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -199,4 +199,4 @@ const OverlapAnalysis = () => {
   );
 };
 
-export default OverlapAnalysis;
+export default OverlapsAnalysis;
