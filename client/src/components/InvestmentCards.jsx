@@ -10,7 +10,9 @@ const InvestmentCards = () => {
   useEffect(() => {
     const fetchInvestmentData = async () => {
       try {
-        const response = await axios.get("http://localhost:8000/investments"); // API Endpoint
+        const response = await axios.get(
+          "http://34.70.31.205:8000/investments"
+        ); // API Endpoint
         setInvestmentData(response.data);
       } catch (err) {
         setError("Failed to fetch data");

@@ -63,7 +63,7 @@ const PerformanceSummary = () => {
     const fetchPerformanceSummary = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:8000/performance-metrics/performance-summary"
+          "http://34.70.31.205:8000/performance-metrics/performance-summary"
         );
         setPerformanceData(response.data);
         setLoading(false);

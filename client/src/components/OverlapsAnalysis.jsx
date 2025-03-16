@@ -98,7 +98,7 @@ const OverlapsAnalysis = () => {
     const fetchOverlapAnalysis = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:8000/overlap-analysis/overlaps"
+          "http://34.70.31.205:8000/overlap-analysis/overlaps"
         );
         const fetchedData = response.data.overlaps;
         console.log("fetchedData:", fetchedData);

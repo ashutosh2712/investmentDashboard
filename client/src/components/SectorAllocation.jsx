@@ -21,7 +21,7 @@ const SectorAllocation = () => {
     const fetchSectors = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:8000/fund-allocations/sectors"
+          "http://34.70.31.205:8000/fund-allocations/sectors"
         );
         setSectors(response.data.sectors);
       } catch (err) {
@@ -37,7 +37,7 @@ const SectorAllocation = () => {
     setHoveredSector(sectorName);
     try {
       const response = await axios.get(
-        `http://localhost:8000/fund-allocations/sector/${sectorName}`
+        `http://34.70.31.205:8000/fund-allocations/sector/${sectorName}`
       );
       setMutualFunds({ [sectorName]: response.data.mutual_funds });
     } catch (err) {
