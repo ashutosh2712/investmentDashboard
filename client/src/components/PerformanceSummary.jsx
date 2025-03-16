@@ -1,5 +1,6 @@
+import axios from "axios";
 import { CircleArrowUp } from "lucide-react";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   LineChart,
   Line,
@@ -55,14 +56,45 @@ const dummyData = {
 
 const PerformanceSummary = () => {
   const [selectedRange, setSelectedRange] = useState("1M");
+  const [performanceData, setPerformanceData] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchPerformanceSummary = async () => {
+      try {
+        const response = await axios.get(
+          "http://localhost:8000/performance-metrics/performance-summary"
+        );
+        setPerformanceData(response.data);
+        setLoading(false);
+      } catch (err) {
+        console.error("Error fetching performance summary:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchPerformanceSummary();
+  }, []);
+
+  if (loading) {
+    return <p className="text-white">Loading performance data...</p>;
+  }
 
   return (
     <div className="bg-gray-900 p-6 rounded-lg border border-blue-500">
       <h2 className="text-xl font-bold text-white mb-4">Performance Summary</h2>
+      {/* Current Investment Value & Performance */}
       <div className="bg-gray-800 p-4 rounded-lg inline-block">
-        <h3 className="text-3xl font-semibold text-white">₹5,50,000</h3>
+        <h3 className="text-3xl font-semibold text-white">
+          ₹{performanceData?.total_current_value.toLocaleString()}
+        </h3>
         <p className="text-green-400 text-lg flex gap-2 justify-center items-center">
-          <CircleArrowUp /> ₹50,000 | 10%
+          <CircleArrowUp />₹
+          {(
+            performanceData.total_current_value -
+            performanceData.total_investment
+          ).toLocaleString()}{" "}
+          | {performanceData.overall_irr.toFixed(2)}%
         </p>
       </div>
 

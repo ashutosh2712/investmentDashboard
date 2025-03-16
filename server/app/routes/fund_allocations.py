@@ -3,6 +3,7 @@ from sqlalchemy.orm import Session
 from app.database import get_db
 from app.models import MutualFund, SectorAllocation, StockAllocation, MarketCapAllocation
 from sqlalchemy.sql import func
+from urllib.parse import unquote
 
 router = APIRouter()
 
@@ -34,9 +35,11 @@ def get_all_sectors(db: Session = Depends(get_db)):
 
 @router.get("/sector/{sector_name}")
 def get_mutual_funds_by_sector(sector_name: str, db: Session = Depends(get_db)):
+    decoded_sector_name = unquote(sector_name)
+    print("decoded_sector_name: ",decoded_sector_name)
     sector_allocations = (
         db.query(SectorAllocation)
-        .filter(SectorAllocation.sector_name == sector_name)
+        .filter(SectorAllocation.sector_name == decoded_sector_name)
         .all()
     )
 
@@ -52,4 +55,4 @@ def get_mutual_funds_by_sector(sector_name: str, db: Session = Depends(get_db)):
         for allocation in sector_allocations
     ]
 
-    return {"sector": sector_name, "mutual_funds": mutual_funds}
+    return {"sector": decoded_sector_name, "mutual_funds": mutual_funds}
